@@ -1,60 +1,38 @@
-FUNCTION read_pair_of_vect() : INTEGER
-VAR
-    n: INTEGER;
-BEGIN
-    REPEAT
-        Write("write down the number of vectors");
-        Read(n);
-    UNTIL (n>2 and n%2=0)
-    RETURN n;
-END
-
-PROCEDURE read_Vector(VAR Tab : ARRAY_OF INTEGER)
+PROCEDURE dot_product(v1,v2 : ARRAY_OF INTEGER, VAR dot : INTEGER)
 VAR
     i : INTEGER;
 BEGIN
-    FOR i FROM 0 TO 1 STEP 1  DO
-        IF (i=0) THEN
-            Write("enter the coordinate x of the vector")
-            Read(Tab[i]);
-        ELSE
-            Write("enter the coordinate y of the vector")
-            Read(Tab[i]);
-        END_IF
-    END_FOR
+    dot :=0;
+    i:=0;
+    IF (v1.length <> v2.length) THEN
+        Write("vectors with different sizes we cannot calculat dot product");
+        dot := NaN; // NaN : not definte number
+    END_IF
+    WHILE (i <v1.length ) DO
+        dot := dot + v1[i]*v2[i];
+    END_WHILE
 END
 
-PROCEDURE dot_product(tab1,tab2 : ARRAY_OF INTEGER, VAR ps: INTEGER)
+ALGORITHM orth_vectors
 VAR
-    i : INTEGER;
-BEGIN
-    FOR i FROM 0 TO 1 STEP 1  DO
-        ps=ps+tab1[i]*tab2[i];
-    END_FOR
-    Write(ps);
-END
-
-ALGORITHM vectors
-VAR
-    htab1: HASH_TABLE<INTEGER,ARRAY_OF INTEGER[2]>
-    n,i : INTEGER;
-    Result : INTEGER := 0;
+    v1,v2 : ARRAY_OF INTEGER [50];
+    dot : INTEGER;
 
 BEGIN
 
-    n := read_pair_of_vect();
-
-    FOR i FROM 0 TO n-1 STEP 1  DO
-        read_Vector(htab.get(i));
-    END_FOR
-
-    FOR i FROM 0 TO n-2 STEP 1  DO
-        dot_product(htab1.get(i),htab1.get(i+1),Result);
-        IF (Resulat=0) THEN
-            Write(htab1.get(i),"and" htab1.get(i+1), "are orthogonal");
-        ELSE
-            Write(htab1.get(i),"and" htab1.get(i+1), "are not orthogonal");
-        END_IF
-    END_FOR
+    // Read Size of elements of V1 
+    n1 := read_size();
+    // Read elements of V1
+    read_array(n1,v1);
+    // Read Size of elements of V2 
+    n2 := read_size();
+    // Read elements of V2
+    read_array(n2,v2);
+    dot_product(v1,v2,dot);
+    IF (dot = 0) THEN
+        Write("V1 and V2 are orthogonal");
+    ELSE
+        Write("V1 and V2 are not orthogonal");
+    END_IF
 
 END
